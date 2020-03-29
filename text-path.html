@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Your Website</title>
+  <link rel="stylesheet" href="styles/text_path/main.css" />
+</head>
+
+<body>
+
+  <section>
+    <h1 class="anim"> The first section text </h1>
+  </section>
+  <section>
+    <img class="anim" alt="fun"
+      src="images/shared/orbs-640px.jpg">
+    <h1 class="anim"> The second section text </h1>
+  </section>
+  <section>
+    <h1 class="anim"> The third section text, yay! </h1>
+  </section>
+
+
+  <svg viewBox="0 0 500 500">
+    <style type="text/css">
+      .text {
+        text-transform: uppercase;
+        font-weight: bold;
+        fill: #bfc9d1;
+      }
+    </style>
+    <path id="our-text" d="M30 28v439h436V28H45" fill="none" />
+
+    <text y="40" font-size="30" font-family="Arial">
+      <textPath id="text-path" class="text" href="#our-text" startOffset="400">
+          This will be the text that is running around woo!
+      </textPath>
+    </text>
+  </svg>
+
+  <script>
+
+    var textPath = document.querySelector('#text-path');
+
+    function updateTextPathOffset(offset) {
+      textPath.setAttribute('startOffset', offset)
+    }
+
+    function onScroll() {
+      requestAnimationFrame(function () {
+        updateTextPathOffset(window.scrollY * 1.5)
+
+      })
+    }
+    window.addEventListener('scroll', onScroll);
+
+    const title = document.querySelectorAll('.anim');
+
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        console.log(entry);
+        if(entry.isIntersecting == true) {
+          entry.target.classList.add('animate');
+        } else {
+          entry.target.classList.remove('animate')
+        }
+      })
+    })
+
+    title.forEach(title => {
+      observer.observe(title);
+    })
+
+  </script>
+
+</body>
+
+</html>
